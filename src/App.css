@@ -1,38 +1,352 @@
-.App {
-  text-align: center;
+/* Root Variables */
+:root {
+  --neon-blue: #00f3ff;
+  --neon-green: #39ff14;
+  --neon-purple: #9d00ff;
+  --neon-pink: #ff00ff;
+  --dark-bg: #0a0a0a;
+  --navcolor: rgba(20, 15, 50, 0.9);
+  --glow-intensity: 0.8;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* App Container */
+.app-container {
   min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #0a0a0a 0%,
+    #1a1a1a 100%
+  ); /* Dark gradient from detail.css */
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  font-family: "Orbitron", "Exo 2", sans-serif; /* Switched to Orbitron for consistency */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.app-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    #00ffc3 0%,
+    transparent 70%
+  ); /* Cyan glow */
+  opacity: 0.3;
+  filter: blur(20px);
+  animation: pulseGlow 4s ease-in-out infinite;
+  z-index: -1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.app-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 10% 10%,
+    #00d1ff 0%,
+    transparent 50%
+  ); /* Blue glow */
+  opacity: 0.2;
+  filter: blur(30px);
+  animation: pulseGlow 6s ease-in-out infinite;
+  z-index: -1;
+}
+
+/* Main Content */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  position: relative;
+  z-index: 10;
+  flex: 1;
+}
+
+/* Gradient Text */
+.gradient-text {
+  font-family: "Orbitron", sans-serif;
+  color: #00ffc3; /* Solid cyan for consistency */
+  text-shadow: 0 0 10px rgba(0, 255, 195, 0.5), 0 0 20px rgba(0, 255, 195, 0.3); /* Neon glow */
+  transition: all 0.3s ease;
+}
+.gradient-text:hover {
+  color: #00d1ff; /* Blue on hover */
+  text-shadow: 0 0 20px rgba(0, 209, 255, 0.8), 0 0 40px rgba(0, 209, 255, 0.4);
+  animation: neonPulse 2s infinite;
+}
+
+/* Glass Effect */
+.glass-effect {
+  background: rgba(20, 15, 50, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 255, 195, 0.3); /* Cyan border */
+  box-shadow: 0 0 20px rgba(0, 255, 195, 0.2), 0 0 40px rgba(0, 255, 195, 0.1); /* Neon glow */
+}
+
+/* Neon Effect */
+.neon-effect {
+  text-shadow: 0 0 10px rgba(0, 255, 195, 0.5), 0 0 20px rgba(0, 255, 195, 0.3);
+}
+
+/* Primary Button */
+.btn-primary {
+  background: linear-gradient(
+    45deg,
+    #00ffc3,
+    #00d1ff
+  ); /* Gradient from detail.css */
+  color: #0a0a0a; /* Dark text for contrast */
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #00ffc3; /* Border like back-button */
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 500;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2); /* Ripple effect */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  z-index: -1;
+}
+.btn-primary:hover {
+  background: linear-gradient(45deg, #00d1ff, #00ffc3); /* Reversed gradient */
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 255, 195, 0.7), 0 0 40px rgba(0, 255, 195, 0.3);
+}
+.btn-primary:hover::before {
+  width: 300%;
+  height: 300%;
+}
+
+/* Input Field */
+.input-field {
+  background: rgba(20, 15, 50, 0.95);
+  color: #ffffff;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  font-family: "Orbitron", sans-serif; /* Changed to Orbitron */
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.input-field:focus {
+  outline: none;
+  border-color: #00ffc3;
+  box-shadow: 0 0 10px rgba(0, 255, 195, 0.7), 0 0 20px rgba(0, 255, 195, 0.3);
+}
+
+/* Card */
+.card {
+  background: linear-gradient(
+    135deg,
+    #111 0%,
+    #1a1a1a 100%
+  ); /* Gradient from detail.css */
+  border-radius: 1rem;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  box-shadow: 0 0 20px rgba(0, 255, 195, 0.2), 0 0 40px rgba(0, 255, 195, 0.1);
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 0 30px rgba(0, 255, 195, 0.7), 0 0 60px rgba(0, 255, 195, 0.3);
+  border: 1px solid #00ffc3;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 195, 0.3),
+    transparent
+  );
+  transition: 0.6s;
+}
+.card:hover::before {
+  left: 100%;
+}
+
+/* Product Card */
+.product-card {
+  background: linear-gradient(
+    135deg,
+    #111 0%,
+    #1a1a1a 100%
+  ); /* Gradient from detail.css */
+  border-radius: 1rem;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 255, 195, 0.2), 0 0 40px rgba(0, 255, 195, 0.1);
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+.product-card:hover {
+  transform: translateY(-10px) scale(1.02) rotateX(5deg);
+  box-shadow: 0 0 30px rgba(0, 255, 195, 0.7), 0 0 60px rgba(0, 255, 195, 0.3);
+  border: 1px solid #00ffc3;
+}
+.product-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 195, 0.3),
+    transparent
+  );
+  transition: 0.6s;
+}
+.product-card:hover::before {
+  left: 100%;
+}
+
+/* Product Title and Price */
+.product-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff; /* White for contrast */
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 5px rgba(0, 255, 195, 0.5); /* Neon glow */
+}
+
+.product-price {
+  color: #00ffc3; /* Cyan for consistency */
+  font-size: 1.2rem;
+  text-shadow: 0 0 5px rgba(0, 255, 195, 0.3);
+}
+
+/* Products Grid */
+.products-grid {
+  grid-template-columns: repeat(3, 1.5fr);
+  gap: 1.4rem;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(20, 15, 50, 0.95);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    45deg,
+    #00ffc3,
+    #00d1ff
+  ); /* Gradient from detail.css */
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 255, 195, 0.7);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  box-shadow: 0 0 15px rgba(0, 255, 195, 1);
+}
+
+/* Animations */
+@keyframes neonPulse {
+  0% {
+    text-shadow: 0 0 10px rgba(0, 255, 195, 0.5),
+      0 0 20px rgba(0, 255, 195, 0.3);
+    box-shadow: 0 0 15px rgba(0, 255, 195, 0.3), 0 0 25px rgba(0, 209, 255, 0.3);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    text-shadow: 0 0 20px rgba(0, 255, 195, 0.8),
+      0 0 30px rgba(0, 255, 195, 0.5);
+    box-shadow: 0 0 30px rgba(0, 255, 195, 0.7), 0 0 50px rgba(0, 209, 255, 0.7);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(0, 255, 195, 0.5),
+      0 0 20px rgba(0, 255, 195, 0.3);
+    box-shadow: 0 0 15px rgba(0, 255, 195, 0.3), 0 0 25px rgba(0, 209, 255, 0.3);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Media Queries */
+@media (max-width: 1000px) {
+  .main-content {
+    padding: 1rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.4rem;
+  }
+
+  .card,
+  .product-card {
+    padding: 1rem;
+  }
+
+  .btn-primary {
+    padding: 0.5rem 1rem;
+  }
+
+  .product-title {
+    font-size: 1.1rem; /* Adjusted for readability */
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(0, 255, 195, 0.5);
+  }
+
+  .product-price {
+    font-size: 1.1rem;
+    color: #00ffc3;
+    text-shadow: 0 0 5px rgba(0, 255, 195, 0.3);
   }
 }
