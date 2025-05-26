@@ -337,6 +337,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  margin-top: 50px;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   backdrop-filter: blur(10px);
   display: flex;
@@ -605,7 +606,7 @@
     font-size: 1.6rem;
   }
   .filter-modal {
-    transform: translateY(170px); /* Move modal 80px downward */
+    transform: translateY(90%); /* Move modal 80px downward */
   }
 }
 

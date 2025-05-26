@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -20,6 +20,24 @@ function Navbar() {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const profileDropdownRef = useRef(null);
+  const mobilePopupRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+        setIsProfileDropdownOpen(false);
+      }
+      if (mobilePopupRef.current && !mobilePopupRef.current.contains(event.target)) {
+        setIsMobilePopupOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const toggleMobilePopup = () => {
     setIsMobilePopupOpen(!isMobilePopupOpen);
@@ -54,8 +72,8 @@ function Navbar() {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
       animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 100, damping: 20 }}
       className={`navbar ${theme}`}
     >
       <div className="navbar-container">
@@ -102,7 +120,7 @@ function Navbar() {
         </form>
 
         <div className="nav-icons">
-          <div className="profile-icon-container">
+          <div className="profile-icon-container" ref={profileDropdownRef}>
             <button
               onClick={toggleProfileDropdown}
               className="nav-icon profile-icon"
@@ -186,6 +204,7 @@ function Navbar() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mobile-popup"
+              ref={mobilePopupRef}
             >
               <NavLink
                 to="/"
